@@ -16,6 +16,7 @@
 		EDE216B41E1AC5D000338265 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE216B31E1AC5D000338265 /* PreviewViewController.swift */; };
 		EDE216B61E1B350800338265 /* UIViewController+Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE216B51E1B350700338265 /* UIViewController+Record.swift */; };
 		EDE216B81E1B39C400338265 /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE216B71E1B39C400338265 /* UIImage+Gif.swift */; };
+		EDE216BA1E1C28B500338265 /* Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE216B91E1C28B500338265 /* Gif.swift */; };
 		EDFAA8ED1CDA99A500D2CB08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFAA8EC1CDA99A500D2CB08 /* AppDelegate.swift */; };
 		EDFAA8F41CDA99A500D2CB08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EDFAA8F31CDA99A500D2CB08 /* Assets.xcassets */; };
 		EDFAA91F1CDA9C3100D2CB08 /* AVAssetImageGeneratorTimePoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFAA91C1CDA9C3100D2CB08 /* AVAssetImageGeneratorTimePoints.swift */; };
@@ -33,6 +34,7 @@
 		EDE216B31E1AC5D000338265 /* PreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		EDE216B51E1B350700338265 /* UIViewController+Record.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Record.swift"; sourceTree = "<group>"; };
 		EDE216B71E1B39C400338265 /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
+		EDE216B91E1C28B500338265 /* Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gif.swift; sourceTree = "<group>"; };
 		EDFAA8E91CDA99A500D2CB08 /* GifMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GifMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDFAA8EC1CDA99A500D2CB08 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = GifMaker/AppDelegate.swift; sourceTree = "<group>"; };
 		EDFAA8F31CDA99A500D2CB08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -73,6 +75,24 @@
 			name = Assets;
 			sourceTree = "<group>";
 		};
+		EDE216BB1E1C28C200338265 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EDE216B91E1C28B500338265 /* Gif.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		EDE216BC1E1C28D500338265 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				EDE216AF1E1AC59700338265 /* WelcomeViewController.swift */,
+				EDE216B31E1AC5D000338265 /* PreviewViewController.swift */,
+				EDE216B11E1AC5AB00338265 /* GifEditorViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
 		EDFAA8E01CDA99A500D2CB08 = {
 			isa = PBXGroup;
 			children = (
@@ -93,11 +113,10 @@
 		EDFAA8EB1CDA99A500D2CB08 /* GifMaker */ = {
 			isa = PBXGroup;
 			children = (
-				EDE216AF1E1AC59700338265 /* WelcomeViewController.swift */,
 				EDE216B51E1B350700338265 /* UIViewController+Record.swift */,
-				EDE216B11E1AC5AB00338265 /* GifEditorViewController.swift */,
-				EDE216B31E1AC5D000338265 /* PreviewViewController.swift */,
 				EDE216B71E1B39C400338265 /* UIImage+Gif.swift */,
+				EDE216BC1E1C28D500338265 /* View Controllers */,
+				EDE216BB1E1C28C200338265 /* Model */,
 				A94CC3D71D21C85A00DC758E /* Assets */,
 				A94CC3D61D21C84C00DC758E /* Supporting Files */,
 				EDFAA9221CDA9C4700D2CB08 /* Regift Files */,
@@ -143,7 +162,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0800;
-				ORGANIZATIONNAME = "Gabrielle Miller-Messner";
+				ORGANIZATIONNAME = "Alejandrina Patron";
 				TargetAttributes = {
 					EDFAA8E81CDA99A500D2CB08 = {
 						CreatedOnToolsVersion = 7.3;
@@ -195,6 +214,7 @@
 				EDE216B01E1AC59700338265 /* WelcomeViewController.swift in Sources */,
 				EDE216B41E1AC5D000338265 /* PreviewViewController.swift in Sources */,
 				EDE216B81E1B39C400338265 /* UIImage+Gif.swift in Sources */,
+				EDE216BA1E1C28B500338265 /* Gif.swift in Sources */,
 				EDE216B21E1AC5AB00338265 /* GifEditorViewController.swift in Sources */,
 				EDFAA9211CDA9C3100D2CB08 /* RegiftCaption.swift in Sources */,
 				EDFAA8ED1CDA99A500D2CB08 /* AppDelegate.swift in Sources */,
