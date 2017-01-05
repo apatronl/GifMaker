@@ -12,7 +12,7 @@ class Gif: NSCoder {
     
     let url: URL?
     let videoURL: URL?
-    let caption: String?
+    var caption: String?
     let gifImage: UIImage?
     var gifData: Data?
     

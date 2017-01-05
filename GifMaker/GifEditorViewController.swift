@@ -88,5 +88,20 @@ extension GifEditorViewController {
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
         return keyboardSize.cgRectValue.height
     }
+    
+    @IBAction func presentPreview(sender: AnyObject) {
+        let previewVC = self.storyboard?.instantiateViewController(withIdentifier: "PreviewViewController") as! PreviewViewController
+        self.gif?.caption = captionTextField.text
+        
+        let regift = Regift(sourceFileURL: (self.gif?.videoURL)!, frameCount: frameCount, delayTime: delayTime, loopCount: loopCount)
+        
+        let captionFont = captionTextField.font
+        let url = regift.createGif(caption: captionTextField.text, font: captionFont)
+        
+        let gif = Gif(url: url!, videoURL: (self.gif?.videoURL)!, caption: captionTextField.text)
+        previewVC.gif = gif
+        
+        self.navigationController?.pushViewController(previewVC, animated: true)
+    }
 }
 

@@ -9,11 +9,14 @@
 import UIKit
 
 class PreviewViewController: UIViewController {
+    
+    var gif: Gif?
+    
+    @IBOutlet weak var gifImageView: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        gifImageView.image = gif?.gifImage
     }
 
     override func didReceiveMemoryWarning() {
