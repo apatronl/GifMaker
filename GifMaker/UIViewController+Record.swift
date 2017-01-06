@@ -19,7 +19,30 @@ let loopCount = 0 // 0 = loop forever
 
 extension UIViewController {
     
-    @IBAction func launchCamera(sender: AnyObject) {
+    @IBAction func presentVideoOptions(sender: AnyObject) {
+        if !UIImagePickerController.isSourceTypeAvailable(.camera) {
+            self.launchPhotoLibrary()
+        } else {
+            let newGifActionSheet = UIAlertController(title: "Create a new GIF", message: nil, preferredStyle: .actionSheet)
+            let recordVideo = UIAlertAction(title: "Record a Video", style: .default, handler: { UIAlertAction in
+                self.launchVideoCamera()
+            })
+            let chooseFromExisting = UIAlertAction(title: "Choose from Existing", style: .default, handler: { UIAlertAction in
+                self.launchPhotoLibrary()
+            })
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            newGifActionSheet.addAction(recordVideo)
+            newGifActionSheet.addAction(chooseFromExisting)
+            newGifActionSheet.addAction(cancel)
+            
+            present(newGifActionSheet, animated: true, completion: nil)
+            let pinkColor = UIColor(red: 255.0/255.0, green: 65.0/255.0, blue: 112.0/255.0, alpha: 1.0)
+            newGifActionSheet.view.tintColor = pinkColor
+        }
+        
+    }
+    
+    public func launchVideoCamera() {
         let recordVideoController = UIImagePickerController()
         recordVideoController.sourceType = .camera
         recordVideoController.mediaTypes = [kUTTypeMovie as String]
@@ -27,6 +50,16 @@ extension UIViewController {
         recordVideoController.delegate = self
         recordVideoController.videoQuality = .typeHigh
         self.present(recordVideoController, animated: true, completion: nil)
+    }
+    
+    public func launchPhotoLibrary() {
+        let videoPicker = UIImagePickerController()
+        videoPicker.sourceType = .photoLibrary
+        videoPicker.mediaTypes = [kUTTypeMovie as String]
+        videoPicker.allowsEditing = false
+        videoPicker.delegate = self
+        videoPicker.videoQuality = .typeHigh
+        self.present(videoPicker, animated: true, completion: nil)
     }
     
 }
