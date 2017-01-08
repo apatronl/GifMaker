@@ -46,8 +46,8 @@ extension UIViewController {
         let recordVideoController = UIImagePickerController()
         recordVideoController.sourceType = .camera
         recordVideoController.mediaTypes = [kUTTypeMovie as String]
-        recordVideoController.allowsEditing = false
         recordVideoController.delegate = self
+        recordVideoController.allowsEditing = true
         recordVideoController.videoQuality = .typeHigh
         self.present(recordVideoController, animated: true, completion: nil)
     }
@@ -56,8 +56,8 @@ extension UIViewController {
         let videoPicker = UIImagePickerController()
         videoPicker.sourceType = .photoLibrary
         videoPicker.mediaTypes = [kUTTypeMovie as String]
-        videoPicker.allowsEditing = false
         videoPicker.delegate = self
+        videoPicker.allowsEditing = true
         videoPicker.videoQuality = .typeHigh
         self.present(videoPicker, animated: true, completion: nil)
     }
@@ -78,8 +78,16 @@ extension UIViewController: UIImagePickerControllerDelegate {
         let mediaType = info[UIImagePickerControllerMediaType] as! String
         if mediaType == kUTTypeMovie as String {
             let videoURL = info[UIImagePickerControllerMediaURL] as! NSURL
+            let start: NSNumber? = info["_UIImagePickerControllerVideoEditingStart"] as? NSNumber
+            let end: NSNumber? = info["_UIImagePickerControllerVideoEditingEnd"] as? NSNumber
+            var duration: NSNumber?
+            if let start = start {
+                duration = NSNumber(value: (end!.floatValue) - (start.floatValue))
+            } else {
+                duration = nil
+            }
             dismiss(animated: true, completion: nil)
-            convertVideoToGIF(videoURL: videoURL)
+            convertVideoToGIF(videoURL: videoURL, start: start, duration: duration)
         }
     }
     
@@ -87,8 +95,18 @@ extension UIViewController: UIImagePickerControllerDelegate {
         dismiss(animated: true, completion: nil)
     }
     
-    func convertVideoToGIF(videoURL: NSURL) {
-        let regift = Regift(sourceFileURL: videoURL as URL, frameCount: frameCount, delayTime: delayTime, loopCount: loopCount)
+    func convertVideoToGIF(videoURL: NSURL, start: NSNumber?, duration: NSNumber?) {
+        DispatchQueue.main.async( execute: {
+            self.dismiss(animated: true, completion: nil)
+        })
+        var regift: Regift!
+        if let _ = start {
+            // trimmed gif
+            regift = Regift(sourceFileURL: videoURL as URL, destinationFileURL: nil, startTime: start as! Float, duration: duration as! Float, frameRate: frameCount, loopCount: loopCount)
+        } else {
+            // untrimmed gif
+            regift = Regift(sourceFileURL: videoURL as URL, frameCount: frameCount, delayTime: delayTime, loopCount: loopCount)
+        }
         let gifURL = regift.createGif()
         let gif = Gif(url: gifURL!, videoURL: videoURL as URL, caption: nil)
         displayGIF(gif: gif)
