@@ -78,7 +78,7 @@ extension UIViewController: UIImagePickerControllerDelegate {
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let mediaType = info[UIImagePickerControllerMediaType] as! String
         if mediaType == kUTTypeMovie as String {
-            let videoURL = info[UIImagePickerControllerMediaURL] as! NSURL
+            let videoURL = info[UIImagePickerControllerMediaURL] as! URL
             let start: NSNumber? = info["_UIImagePickerControllerVideoEditingStart"] as? NSNumber
             let end: NSNumber? = info["_UIImagePickerControllerVideoEditingEnd"] as? NSNumber
             var duration: NSNumber?
@@ -88,7 +88,8 @@ extension UIViewController: UIImagePickerControllerDelegate {
                 duration = nil
             }
             dismiss(animated: true, completion: nil)
-            convertVideoToGIF(videoURL: videoURL, start: start, duration: duration)
+            cropVideoToSquare(rawVideoURL: videoURL, start: start, duration: duration)
+//            convertVideoToGIF(videoURL: videoURL, start: start, duration: duration)
         }
     }
     
@@ -96,21 +97,20 @@ extension UIViewController: UIImagePickerControllerDelegate {
         dismiss(animated: true, completion: nil)
     }
     
-    func convertVideoToGIF(videoURL: NSURL, start: NSNumber?, duration: NSNumber?) {
+    func convertVideoToGIF(videoURL: URL, start: NSNumber?, duration: NSNumber?) {
         DispatchQueue.main.async( execute: {
             self.dismiss(animated: true, completion: nil)
         })
         var regift: Regift!
         if let _ = start {
             // trimmed gif
-            regift = Regift(sourceFileURL: videoURL as URL, destinationFileURL: nil, startTime: start as! Float, duration: duration as! Float, frameRate: frameCount, loopCount: loopCount)
+            regift = Regift(sourceFileURL: videoURL, destinationFileURL: nil, startTime: start as! Float, duration: duration as! Float, frameRate: frameCount, loopCount: loopCount)
         } else {
             // untrimmed gif
-            print("untrimmed!")
-            regift = Regift(sourceFileURL: videoURL as URL, frameCount: frameCount, delayTime: delayTime, loopCount: loopCount)
+            regift = Regift(sourceFileURL: videoURL, frameCount: frameCount, delayTime: delayTime, loopCount: loopCount)
         }
         let gifURL = regift.createGif()
-        let gif = Gif(url: gifURL!, videoURL: videoURL as URL, caption: nil)
+        let gif = Gif(url: gifURL!, videoURL: videoURL, caption: nil)
         displayGIF(gif: gif)
     }
     
@@ -119,11 +119,13 @@ extension UIViewController: UIImagePickerControllerDelegate {
         gifEditorVC.gif = gif
         navigationController?.pushViewController(gifEditorVC, animated: true)
     }
-    
-    func cropVideoToSquare(rawVideoURL: NSURL, start: NSNumber?, duration: NSNumber?) {
-        let videoAsset = AVAsset(url: rawVideoURL as URL)
+
+    func cropVideoToSquare(rawVideoURL: URL, start: NSNumber?, duration: NSNumber?) {
+        //Create the AVAsset and AVAssetTrack
+        let videoAsset = AVAsset(url: rawVideoURL)
         let videoTrack = videoAsset.tracks(withMediaType: AVMediaTypeVideo).first! as AVAssetTrack
         
+        // Crop to square
         let videoComposition = AVMutableVideoComposition()
         videoComposition.renderSize = CGSize(width: videoTrack.naturalSize.height, height: videoTrack.naturalSize.height)
         videoComposition.frameDuration = CMTime(value: 1, timescale: 30)
@@ -131,10 +133,50 @@ extension UIViewController: UIImagePickerControllerDelegate {
         let instruction = AVMutableVideoCompositionInstruction()
         instruction.timeRange = CMTimeRange(start: kCMTimeZero, duration: CMTimeMakeWithSeconds(60, 30))
         
+        // Rotate to portrait
+        let transformer = AVMutableVideoCompositionLayerInstruction(assetTrack: videoTrack)
+        let t1 = CGAffineTransform(translationX: videoTrack.naturalSize.height, y: -(videoTrack.naturalSize.width - videoTrack.naturalSize.height) / 2.0)
+        let t2 = t1.rotated(by: CGFloat.pi / 2.0)
+        let finalTransform: CGAffineTransform = t2
+        transformer.setTransform(finalTransform, at: kCMTimeZero)
+        instruction.layerInstructions = [transformer]
+        videoComposition.instructions = [instruction]
         
+        // Export
+        let exporter = AVAssetExportSession(asset: videoAsset, presetName: AVAssetExportPresetHighestQuality)
+        exporter?.videoComposition = videoComposition
+        let path = self.createPath()
+        exporter?.outputURL = URL(fileURLWithPath: path)
+        exporter?.outputFileType = AVFileTypeQuickTimeMovie
+        
+        
+        exporter?.exportAsynchronously(completionHandler: { () -> Void in
+            DispatchQueue.main.async() {
+                self.convertVideoToGIF(videoURL: (exporter?.outputURL)!, start: start, duration: duration)
+            }
+        })
     }
     
-    
+    func createPath() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        let documentsDirectory = paths.first
+        let manager = FileManager.default
+        var outputURL = documentsDirectory!.appending("/output")
+        do {
+            try manager.createDirectory(atPath: outputURL, withIntermediateDirectories: true, attributes: nil)
+        } catch let error {
+            print(error.localizedDescription);
+        }
+        
+        outputURL = (outputURL as NSString).appendingPathComponent("output.mov")
+        // Remove Existing File
+        do {
+            try manager.removeItem(atPath: outputURL)
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        return outputURL
+    }
     
     
     
