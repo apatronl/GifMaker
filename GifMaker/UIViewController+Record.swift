@@ -8,6 +8,7 @@
 
 import MobileCoreServices
 import UIKit
+import AVFoundation
 
 // MARK: - Constants
 
@@ -81,8 +82,8 @@ extension UIViewController: UIImagePickerControllerDelegate {
             let start: NSNumber? = info["_UIImagePickerControllerVideoEditingStart"] as? NSNumber
             let end: NSNumber? = info["_UIImagePickerControllerVideoEditingEnd"] as? NSNumber
             var duration: NSNumber?
-            if let start = start {
-                duration = NSNumber(value: (end!.floatValue) - (start.floatValue))
+            if let start = start, let end = end {
+                duration = NSNumber(value: (end.floatValue) - (start.floatValue))
             } else {
                 duration = nil
             }
@@ -105,6 +106,7 @@ extension UIViewController: UIImagePickerControllerDelegate {
             regift = Regift(sourceFileURL: videoURL as URL, destinationFileURL: nil, startTime: start as! Float, duration: duration as! Float, frameRate: frameCount, loopCount: loopCount)
         } else {
             // untrimmed gif
+            print("untrimmed!")
             regift = Regift(sourceFileURL: videoURL as URL, frameCount: frameCount, delayTime: delayTime, loopCount: loopCount)
         }
         let gifURL = regift.createGif()
@@ -117,5 +119,27 @@ extension UIViewController: UIImagePickerControllerDelegate {
         gifEditorVC.gif = gif
         navigationController?.pushViewController(gifEditorVC, animated: true)
     }
+    
+    func cropVideoToSquare(rawVideoURL: NSURL, start: NSNumber?, duration: NSNumber?) {
+        let videoAsset = AVAsset(url: rawVideoURL as URL)
+        let videoTrack = videoAsset.tracks(withMediaType: AVMediaTypeVideo).first! as AVAssetTrack
+        
+        let videoComposition = AVMutableVideoComposition()
+        videoComposition.renderSize = CGSize(width: videoTrack.naturalSize.height, height: videoTrack.naturalSize.height)
+        videoComposition.frameDuration = CMTime(value: 1, timescale: 30)
+        
+        let instruction = AVMutableVideoCompositionInstruction()
+        instruction.timeRange = CMTimeRange(start: kCMTimeZero, duration: CMTimeMakeWithSeconds(60, 30))
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
 }
