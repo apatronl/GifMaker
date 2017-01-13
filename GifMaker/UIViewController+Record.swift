@@ -89,7 +89,6 @@ extension UIViewController: UIImagePickerControllerDelegate {
             }
             dismiss(animated: true, completion: nil)
             cropVideoToSquare(rawVideoURL: videoURL, start: start, duration: duration)
-//            convertVideoToGIF(videoURL: videoURL, start: start, duration: duration)
         }
     }
     
@@ -177,11 +176,5 @@ extension UIViewController: UIImagePickerControllerDelegate {
         }
         return outputURL
     }
-    
-    
-    
-    
-    
-    
     
 }
