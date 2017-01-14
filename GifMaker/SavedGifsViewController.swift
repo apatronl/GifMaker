@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SavedGifsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class SavedGifsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PreviewViewControllerDelegate {
     
     var savedGifs = [Gif]()
     let cellMargin: CGFloat = 12.0
@@ -46,15 +46,12 @@ class SavedGifsViewController: UIViewController, UICollectionViewDelegate, UICol
         let width = (collectionView.frame.size.width - (cellMargin * 2.0)) / 2.0
         return CGSize(width: width, height: width)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    // MARK: PreviewViewControllerDelegate
+    func previewVC(_preview: PreviewViewController, didSaveGif gif: Gif) {
+        print("Protocol")
+        gif.gifData = NSData(contentsOf: gif.url!)
+        savedGifs.append(gif)
     }
-    */
 
 }

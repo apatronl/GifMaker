@@ -14,7 +14,7 @@ class Gif: NSCoder {
     let videoURL: URL?
     var caption: String?
     let gifImage: UIImage?
-    var gifData: Data?
+    var gifData: NSData?
     
     init(url: URL, videoURL: URL, caption: String?) {
         self.url = url

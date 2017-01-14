@@ -271,6 +271,9 @@
                                         <state key="normal" title="CREATE AND SAVE">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="createAndSaveWithSender:" destination="cB7-Y1-ZFX" eventType="touchUpInside" id="39a-Ez-zKG"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
