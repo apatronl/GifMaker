@@ -19,6 +19,7 @@
 		EDE216BA1E1C28B500338265 /* Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE216B91E1C28B500338265 /* Gif.swift */; };
 		EDE216BE1E29362300338265 /* SavedGifsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE216BD1E29362300338265 /* SavedGifsViewController.swift */; };
 		EDE216C01E29391100338265 /* GifCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE216BF1E29391100338265 /* GifCell.swift */; };
+		EDE216C21E2BDC4600338265 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE216C11E2BDC4500338265 /* DetailViewController.swift */; };
 		EDFAA8ED1CDA99A500D2CB08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFAA8EC1CDA99A500D2CB08 /* AppDelegate.swift */; };
 		EDFAA8F41CDA99A500D2CB08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EDFAA8F31CDA99A500D2CB08 /* Assets.xcassets */; };
 		EDFAA91F1CDA9C3100D2CB08 /* AVAssetImageGeneratorTimePoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFAA91C1CDA9C3100D2CB08 /* AVAssetImageGeneratorTimePoints.swift */; };
@@ -39,6 +40,7 @@
 		EDE216B91E1C28B500338265 /* Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gif.swift; sourceTree = "<group>"; };
 		EDE216BD1E29362300338265 /* SavedGifsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedGifsViewController.swift; sourceTree = "<group>"; };
 		EDE216BF1E29391100338265 /* GifCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GifCell.swift; sourceTree = "<group>"; };
+		EDE216C11E2BDC4500338265 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		EDFAA8E91CDA99A500D2CB08 /* GifMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GifMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDFAA8EC1CDA99A500D2CB08 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = GifMaker/AppDelegate.swift; sourceTree = "<group>"; };
 		EDFAA8F31CDA99A500D2CB08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 				EDE216B31E1AC5D000338265 /* PreviewViewController.swift */,
 				EDE216B11E1AC5AB00338265 /* GifEditorViewController.swift */,
 				EDE216BD1E29362300338265 /* SavedGifsViewController.swift */,
+				EDE216C11E2BDC4500338265 /* DetailViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -216,6 +219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDE216C21E2BDC4600338265 /* DetailViewController.swift in Sources */,
 				EDFAA9201CDA9C3100D2CB08 /* Regift.swift in Sources */,
 				EDE216BE1E29362300338265 /* SavedGifsViewController.swift in Sources */,
 				EDE216C01E29391100338265 /* GifCell.swift in Sources */,

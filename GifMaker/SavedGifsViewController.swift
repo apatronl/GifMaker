@@ -50,8 +50,15 @@ class SavedGifsViewController: UIViewController, UICollectionViewDelegate, UICol
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GifCell", for: indexPath) as! GifCell
         let gif = savedGifs[indexPath.item]
         cell.configureForGif(gif: gif)
-        cell.layoutIfNeeded()
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let gif = savedGifs[indexPath.item]
+        let detailVC = self.storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+        detailVC.gif = gif
+        detailVC.modalPresentationStyle = .overCurrentContext
+        self.present(detailVC, animated: true, completion: nil)
     }
     
     // MARK: CollectionViewFlowLayout
