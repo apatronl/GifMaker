@@ -17,8 +17,11 @@ class SavedGifsViewController: UIViewController, UICollectionViewDelegate, UICol
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        emptyView.isHidden = savedGifs.count != 0
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        emptyView.isHidden = (savedGifs.count != 0)
         collectionView.reloadData()
     }
 
@@ -37,6 +40,7 @@ class SavedGifsViewController: UIViewController, UICollectionViewDelegate, UICol
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GifCell", for: indexPath) as! GifCell
         let gif = savedGifs[indexPath.item]
         cell.configureForGif(gif: gif)
+        cell.layoutIfNeeded()
         return cell
     }
     
@@ -47,9 +51,9 @@ class SavedGifsViewController: UIViewController, UICollectionViewDelegate, UICol
         return CGSize(width: width, height: width)
     }
     
+    
     // MARK: PreviewViewControllerDelegate
-    func previewVC(_preview: PreviewViewController, didSaveGif gif: Gif) {
-        print("Protocol")
+    func previewVC(preview: PreviewViewController, didSaveGif gif: Gif) {
         gif.gifData = NSData(contentsOf: gif.url!)
         savedGifs.append(gif)
     }

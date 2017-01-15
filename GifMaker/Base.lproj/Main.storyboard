@@ -164,7 +164,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="My Collection" id="7HF-Yq-Lti"/>
                     <connections>
-                        <outlet property="collectionView" destination="hbv-Kk-KXX" id="94J-l0-feu"/>
+                        <outlet property="collectionView" destination="hbv-Kk-KXX" id="sg4-o5-tEI"/>
                         <outlet property="emptyView" destination="rBY-mr-O59" id="CA0-m4-xio"/>
                     </connections>
                 </viewController>

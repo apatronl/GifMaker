@@ -15,4 +15,5 @@ class GifCell: UICollectionViewCell {
     func configureForGif(gif: Gif) {
         gifImageView.image = gif.gifImage
     }
+
 }

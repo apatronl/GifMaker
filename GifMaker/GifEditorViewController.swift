@@ -100,7 +100,7 @@ extension GifEditorViewController {
         
         let gif = Gif(url: url!, videoURL: (self.gif?.videoURL)!, caption: captionTextField.text)
         previewVC.gif = gif
-        previewVC.delegate = SavedGifsViewController()
+        previewVC.delegate = navigationController?.viewControllers.first as! SavedGifsViewController
         
         self.navigationController?.pushViewController(previewVC, animated: true)
     }

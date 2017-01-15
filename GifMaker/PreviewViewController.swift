@@ -9,7 +9,7 @@
 import UIKit
 
 protocol PreviewViewControllerDelegate {
-    func previewVC(_preview: PreviewViewController, didSaveGif gif: Gif)
+    func previewVC(preview: PreviewViewController, didSaveGif gif: Gif)
 }
 
 class PreviewViewController: UIViewController {
@@ -42,12 +42,7 @@ class PreviewViewController: UIViewController {
     }
     
     @IBAction func createAndSave(sender: AnyObject) {
-        self.gif?.gifData = NSData(contentsOf: (self.gif?.url)!)
-        
-        // Save Gif
-//        let appDelegate = UIApplication.shared.delegate
-        
-        delegate?.previewVC(_preview: self, didSaveGif: gif!)
+        delegate?.previewVC(preview: self, didSaveGif: gif!)
         _ = self.navigationController?.popToRootViewController(animated: true)
     }
 
