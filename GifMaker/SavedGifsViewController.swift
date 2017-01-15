@@ -10,6 +10,12 @@ import UIKit
 
 class SavedGifsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PreviewViewControllerDelegate {
     
+    var gifsFilePath: String {
+        let directories = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        let documentsPath = directories[0]
+        let gifsPath = documentsPath.appending("/savedGifs")
+        return gifsPath
+    }
     var savedGifs = [Gif]()
     let cellMargin: CGFloat = 12.0
     @IBOutlet weak var emptyView: UIStackView!
@@ -17,6 +23,10 @@ class SavedGifsViewController: UIViewController, UICollectionViewDelegate, UICol
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if FileManager.default.fileExists(atPath: gifsFilePath) {
+            savedGifs = NSKeyedUnarchiver.unarchiveObject(withFile: gifsFilePath) as! [Gif]
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,6 +66,7 @@ class SavedGifsViewController: UIViewController, UICollectionViewDelegate, UICol
     func previewVC(preview: PreviewViewController, didSaveGif gif: Gif) {
         gif.gifData = NSData(contentsOf: gif.url!)
         savedGifs.append(gif)
+        NSKeyedArchiver.archiveRootObject(savedGifs, toFile: gifsFilePath)
     }
 
 }
