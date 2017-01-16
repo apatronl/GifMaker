@@ -38,7 +38,8 @@ class SavedGifsViewController: UIViewController, UICollectionViewDelegate, UICol
         super.viewWillAppear(animated)
         emptyView.isHidden = (savedGifs.count != 0)
         collectionView.reloadData()
-        
+        self.title = "My Collection"
+        applyTheme(theme: .light)
         self.navigationController?.navigationBar.isHidden = savedGifs.count == 0
     }
 
