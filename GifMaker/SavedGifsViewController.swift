@@ -24,6 +24,11 @@ class SavedGifsViewController: UIViewController, UICollectionViewDelegate, UICol
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        showWelcome()
+        let bottomBlur = CAGradientLayer()
+        bottomBlur.frame = CGRect(x: 0.0, y: self.view.frame.size.height - 100.0, width: self.view.frame.size.width, height: 100.0)
+        bottomBlur.colors = [UIColor(white: 1.0, alpha: 0.0).cgColor, UIColor.white.cgColor]
+        self.view.layer.insertSublayer(bottomBlur, above: self.collectionView.layer)
         if FileManager.default.fileExists(atPath: gifsFilePath) {
             savedGifs = NSKeyedUnarchiver.unarchiveObject(withFile: gifsFilePath) as! [Gif]
         }
@@ -33,11 +38,15 @@ class SavedGifsViewController: UIViewController, UICollectionViewDelegate, UICol
         super.viewWillAppear(animated)
         emptyView.isHidden = (savedGifs.count != 0)
         collectionView.reloadData()
+        
+        self.navigationController?.navigationBar.isHidden = savedGifs.count == 0
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func showWelcome() {
+        if !UserDefaults.standard.bool(forKey: "WelcomeViewSeen") {
+            let welcomeViewController = self.storyboard?.instantiateViewController(withIdentifier: "WelcomeViewController")
+            self.navigationController?.pushViewController(welcomeViewController!, animated: true)
+        }
     }
     
     // MARK: CollectionView Delegate and Datasource Methods
@@ -67,7 +76,6 @@ class SavedGifsViewController: UIViewController, UICollectionViewDelegate, UICol
         let width = (collectionView.frame.size.width - (cellMargin * 2.0)) / 2.0
         return CGSize(width: width, height: width)
     }
-    
     
     // MARK: PreviewViewControllerDelegate
     func previewVC(preview: PreviewViewController, didSaveGif gif: Gif) {
